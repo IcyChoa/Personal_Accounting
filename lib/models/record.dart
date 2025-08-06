@@ -18,9 +18,6 @@ class Record extends HiveObject {
   double amount;
 
   @HiveField(4)
-  String person;
-
-  @HiveField(5)
   String note;
 
   Record({
@@ -28,7 +25,6 @@ class Record extends HiveObject {
     required this.category,
     required this.date,
     required this.amount,
-    required this.person,
     required this.note,
   });
 }

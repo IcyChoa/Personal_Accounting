@@ -1,44 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'record.dart';
+part of 'settings.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class RecordAdapter extends TypeAdapter<Record> {
+class SettingsAdapter extends TypeAdapter<Settings> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  Record read(BinaryReader reader) {
+  Settings read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Record(
-      isExpense: fields[0] as bool,
-      category: fields[1] as Category,
-      date: fields[2] as DateTime,
-      amount: fields[3] as double,
-      note: fields[4] as String,
+    return Settings(
+      categoryWarningShown: fields[0] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Record obj) {
+  void write(BinaryWriter writer, Settings obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.isExpense)
       ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.date)
-      ..writeByte(3)
-      ..write(obj.amount)
-      ..writeByte(4)
-      ..write(obj.note);
+      ..writeByte(0)
+      ..write(obj.categoryWarningShown);
   }
 
   @override
@@ -47,7 +35,7 @@ class RecordAdapter extends TypeAdapter<Record> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is RecordAdapter &&
+      other is SettingsAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

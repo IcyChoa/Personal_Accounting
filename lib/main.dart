@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_accounting/pages/accounting_page.dart';
+import 'package:personal_accounting/pages/history_page.dart';
+import '../services/db.dart';
 
-void main(){
+/// color palette: https://coolors.co/2f2963-533e2d-a27035-b88b4a-eee7cd
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initDatabase();
   runApp(MyApp());
 }
 
@@ -17,6 +24,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''),
+        // add more locales if needed
+      ],
       home: HomePage(title: 'Personal Accounting'),
     );
   }
@@ -37,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     AccountingPage(),
-    //HistoryPage(),
+    HistoryPage(),
     //AnalysisPage(),
   ];
 
