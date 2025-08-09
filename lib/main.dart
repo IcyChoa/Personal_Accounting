@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:personal_accounting/pages/accounting_page.dart';
 import 'package:personal_accounting/pages/history_page.dart';
+import 'package:personal_accounting/pages/analysis_page.dart';
 import '../services/db.dart';
 
 /// color palette: https://coolors.co/2f2963-533e2d-a27035-b88b4a-eee7cd
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     AccountingPage(),
     HistoryPage(),
-    //AnalysisPage(),
+    AnalysisPage(),
   ];
 
   @override

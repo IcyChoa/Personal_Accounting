@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:fl_chart/fl_chart.dart';
 import '../models/category.dart';
 import '../models/record.dart';
 import '../models/settings.dart';
@@ -61,7 +62,6 @@ Future<void> removeCategory(int key) async {
   }
 }
 
-/// rename category and update existing records
 Future<void> renameCategory(int key, String newName) async {
   final catBox = Hive.box<Category>('categories');
   final category = catBox.get(key);
@@ -108,4 +108,35 @@ Future<List<Record>> fetchRecords({required bool isExpense, required DateTime mo
     r.date.year == month.year &&
     r.date.month == month.month)
     .toList();
+}
+
+Future<Map<String, dynamic>> fetchChartData() async {
+  final box = Hive.box<Record>('records');
+  if (box.isEmpty) {
+    return {'income': <FlSpot>[], 'expense': <FlSpot>[], 'months': <DateTime>[]};
+  }
+  final now = DateTime.now();
+  final earliest = box.values.map((r) => r.date).reduce((a, b) => a.isBefore(b) ? a : b);
+  final totalMonths = (now.year - earliest.year) * 12 + (now.month - earliest.month) + 1;
+  final dates = List<DateTime>.generate(
+    totalMonths,
+    (i) {
+      final monthIndex = earliest.month - 1 + i;
+      return DateTime(
+        earliest.year + monthIndex ~/ 12,
+        monthIndex % 12 + 1,
+      );
+    },
+  );
+  final incomeSpots = <FlSpot>[];
+  final expenseSpots = <FlSpot>[];
+  for (var i = 0; i < dates.length; i++) {
+    final d = dates[i];
+    final recs = box.values.where((r) => r.date.year == d.year && r.date.month == d.month);
+    final income = recs.where((r) => !r.isExpense).fold<double>(0.0, (sum, r) => sum + r.amount);
+    final expense = recs.where((r) => r.isExpense).fold<double>(0.0, (sum, r) => sum + r.amount);
+    incomeSpots.add(FlSpot(i.toDouble(), income));
+    expenseSpots.add(FlSpot(i.toDouble(), expense));
+  }
+  return {'income': incomeSpots, 'expense': expenseSpots, 'months': dates};
 }

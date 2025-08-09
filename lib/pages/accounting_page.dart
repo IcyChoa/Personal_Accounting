@@ -204,7 +204,6 @@ class _RecordFormViewState extends State<RecordFormView> {
     await addRecord(record);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Record added')));
     setState(() {
-      // retain selected category and date, only clear amount and note for next entry
       _amountCtrl.clear();
       _noteCtrl.clear();
     });
