@@ -5,6 +5,7 @@ import 'package:personal_accounting/pages/accounting_page.dart';
 import 'package:personal_accounting/pages/history_page.dart';
 import 'package:personal_accounting/pages/analysis_page.dart';
 import '../services/db.dart';
+import 'package:intl/intl.dart';
 
 /// color palette: https://coolors.co/2f2963-533e2d-a27035-b88b4a-eee7cd
 
@@ -89,13 +90,74 @@ class _HomePageState extends State<HomePage> {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(color: Color(0xFFA27035)),
-              child: Text(
-                'Maybe put some logo, balance, or user info here',
-                style: GoogleFonts.robotoSlab(
-                  fontSize: 18,
-                  color: Colors.white70,
-                )
-              )
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Image.asset('assets/AppIcon.png', width: 50, height: 50),
+                      SizedBox(width: 8),
+                      Text(
+                        'Personal Accounting',
+                        style: GoogleFonts.robotoSlab(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  FutureBuilder<List<double>>(
+                    future: Future.wait([
+                      totalAmount(isExpense: false, month: DateTime.now()),
+                      totalAmount(isExpense: true, month: DateTime.now()),
+                    ]),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return SizedBox(
+                          height: 24,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white70,
+                              strokeWidth: 2,
+                            ),
+                          ),
+                        );
+                      }
+                      final income = snapshot.data![0];
+                      final expense = snapshot.data![1];
+                      final formatter = NumberFormat.simpleCurrency();
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Income: ${formatter.format(income)}',
+                            style: GoogleFonts.robotoSlab(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            'Expense: ${formatter.format(expense)}',
+                            style: GoogleFonts.robotoSlab(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  Text(
+                    '"many a little makes a mickle"',
+                    style: GoogleFonts.robotoSlab(
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.white70,
+                    ),
+                  ),
+                ],
+              ),
             ),
             ListTile(
               leading: Icon(Icons.account_balance_wallet, color: Color(0xFF242331)),
