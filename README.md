@@ -1,16 +1,20 @@
-# personal_accounting
+# Simple Accounting
 
-A new Flutter project.
+Simple Accounting is a Flutter application for managing personal finances. Track income and expenses, categorize transactions, and visualize spending trends with interactive charts.
+
+
+## Features
+
+- Create, edit and delete financial records (income/expense)
+- Organize transactions by categories
+- View transaction history and details
+- Interactive charts for spending analysis
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK (>=3.0.0)
+- Dart SDK (comes with Flutter)
+- Android SDK or Xcode for iOS builds
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
